@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <Title>BlazorFileStreamSaver</Title>
+        <Authors>Jack Edwards</Authors>
+        <Description></Description>
+        <PackageProjectUrl>https://www.nuget.org/packages/BlazorFileStreamSaver</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Jack-Edwards/BlazorFileStreamSaver</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+        <IncludeSymbols>True</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <Version>1.0.0</Version>
+        <PackageVersion>1.0.0</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Index.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Properties\launchSettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
+</Project>
