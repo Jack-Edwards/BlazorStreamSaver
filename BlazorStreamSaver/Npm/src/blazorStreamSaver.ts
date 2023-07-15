@@ -1,5 +1,4 @@
-﻿import FileMetaData from "./models/FileMetaData";
-import { initializeServiceWorker, openDownloadStream } from "./download";
+﻿import { FileMetaData, initializeServiceWorker, openDownloadStream } from "./download";
 
 class BlazorStreamSaver {
     constructor() {
