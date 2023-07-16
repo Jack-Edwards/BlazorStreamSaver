@@ -1,0 +1,14 @@
+﻿version: "3.9"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Demo.dockerfile
+    ports:
+      - ${WEB_BIND_PORT-80}:80
+      - ${WEB_SECURE_BIND_PORT-443}:443
+    environment:
+      CADDY_DOMAIN: localhost
+      CADDY_REDIRECT_TO_WWW: 127.0.0.1
+      CADDY_OPTIONS: ""
+    restart: always

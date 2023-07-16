@@ -8,7 +8,8 @@ namespace BlazorStreamSaver.Services;
 
 public interface IBlazorStreamSaverService
 {
-    Task SaveFileAsync();
+    Task InitializeAsync();
+    Task SaveFileAsync(Stream stream);
 }
 
 public partial class BlazorStreamSaverService : IBlazorStreamSaverService
@@ -25,13 +26,13 @@ public partial class BlazorStreamSaverService : IBlazorStreamSaverService
     {
         if (OperatingSystem.IsBrowser())
         {
-            _moduleReference = await _jsRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "../_content/blazorStreamSaver/blazorStreamSaver.bundle.js");
+            _moduleReference = await _jsRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "../_content/BlazorStreamSaver/blazorStreamSaver.bundle.js");
         }
     }
 
     public async Task SaveFileAsync(Stream stream)
     {
-        var streamReference = new DotNetStreamReference(stream, false);
+        DotNetStreamReference streamReference = new DotNetStreamReference(stream, false);
         await _moduleReference.InvokeVoidAsync("saveFile", streamReference);
     }
 }

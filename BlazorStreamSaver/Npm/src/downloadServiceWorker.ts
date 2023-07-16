@@ -78,13 +78,22 @@ class DownloadServiceWorker {
 
         this.pendingDownloads.delete(url);
 
+        /*
         const headers = new Headers({
             ...(size ? { 'Content-Length': `${size}` } : {}),
             'Content-Type': mimeType,
             'Content-Disposition': `attachment; filename="${encodeURI(filename)}"`,
             ...SECURITY_HEADERS,
         });
+        */
 
+        const headers = new Headers({
+            ...(size ? { 'Content-Length': '4' } : {}),
+            'Content-Type': 'text',
+            'Content-Disposition': `attachment; filename="test.txt"`,
+            ...SECURITY_HEADERS,
+        });
+        
         event.respondWith(new Response(stream, { headers }));
     };
     

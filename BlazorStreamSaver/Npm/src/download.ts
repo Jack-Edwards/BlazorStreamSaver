@@ -5,13 +5,15 @@
 }
 
 export async function initializeServiceWorker() {
+    console.log("registering worker");
     await navigator.serviceWorker.register(
         /* webpackChunkName: "downloadServiceWorker" */
         new URL('./downloadServiceWorker', import.meta.url),
         {
-            scope: `/${document.location.origin}`,
+            scope: `/_content/blazorStreamSaver/`
         }
     );
+    console.log("sw registered");
     serviceWorkerKeepAlive();
 }
 
@@ -29,6 +31,7 @@ export async function openDownloadStream(metaData: FileMetaData) {
         },
     });
 
+    console.log("waking up sw");
     const worker = await wakeUpServiceWorker();
     
     channel.port1.onmessage = ({ data }) => {
@@ -54,8 +57,10 @@ async function wakeUpServiceWorker() {
     const worker = navigator.serviceWorker.controller;
 
     if (worker) {
+        console.log("worker exists");
         worker.postMessage({ action: 'ping' });
     } else {
+        console.log("worker not found");
         const workerUrl = `${document.location.origin}/serviceWorker/ping`;
         const response = await fetch(workerUrl);
         const body = await response.text();
@@ -67,6 +72,7 @@ async function wakeUpServiceWorker() {
 }
 
 function createDownloadIframe(src: string) {
+    console.log("creating iframe");
     const iframe = document.createElement('iframe');
     iframe.hidden = true;
     iframe.src = src;

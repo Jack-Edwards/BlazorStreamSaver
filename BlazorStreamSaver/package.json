@@ -1,5 +1,20 @@
 {
+  "name": "blazor_stream_saver",
+  "version": "1..0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack ./Npm/src/blazorStreamSaver.ts --config ./webpack.config.js --output-path ./wwwroot --output-filename blazorStreamSaver.bundle.js"
+  },
+  "author": "Jack Edwards",
+  "license": "GPL",
   "devDependencies": {
-    "typescript": "^5.1.6"
+    "compression-webpack-plugin": "^10.0.0",
+    "path": "^0.12.7",
+    "terser-webpack-plugin": "^5.3.6",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   }
 }

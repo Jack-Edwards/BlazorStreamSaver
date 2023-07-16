@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
@@ -28,7 +28,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\" />
+        <None Update="Npm\src\blazorStreamSaver.js">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
+
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="npm install" />
+        <Exec Command="npm run build" />
+    </Target>
 
 </Project>
