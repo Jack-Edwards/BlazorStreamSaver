@@ -1,30 +1,37 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 
 namespace BlazorStreamSaver.Services;
 
 public interface IBlazorStreamSaverService
 {
-    Task InitializeAsync();
+    Task SaveFileAsync();
 }
 
 public partial class BlazorStreamSaverService : IBlazorStreamSaverService
 {
-    public BlazorStreamSaverService()
+    private readonly IJSRuntime _jsRuntime;
+    private IJSInProcessObjectReference _moduleReference;
+    
+    public BlazorStreamSaverService(IJSRuntime jsRuntime)
     {
-        
+        _jsRuntime = jsRuntime;
     }
     
     public async Task InitializeAsync()
     {
         if (OperatingSystem.IsBrowser())
         {
-            await JSHost.ImportAsync("blazorStreamSaver", "../_content/blazorStreamSaver/blazorStreamSaver.bundle.js");
-            await PrivateInitializeAsync();
+            _moduleReference = await _jsRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "../_content/blazorStreamSaver/blazorStreamSaver.bundle.js");
         }
     }
 
-    [JSImport("init", "blazorStreamSaver")]
-    private static partial Task PrivateInitializeAsync();
+    public async Task SaveFileAsync(Stream stream)
+    {
+        var streamReference = new DotNetStreamReference(stream, false);
+        await _moduleReference.InvokeVoidAsync("saveFile", streamReference);
+    }
 }
