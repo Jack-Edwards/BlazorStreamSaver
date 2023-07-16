@@ -6,11 +6,16 @@
 		format console
 	}
 
-    handle /_content/* {
+    handle /_content/BlazorStreamSaver/downloadServiceWorker {
         root * /srv
     
         file_server {
             precompressed br gzip
+        }
+        
+        header {
+            Service-Worker-Allowed "/"
+            Service-Worker "script"
         }
 	}
 

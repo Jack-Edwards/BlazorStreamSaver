@@ -7,12 +7,14 @@
 export async function initializeServiceWorker() {
     console.log("registering worker");
     await navigator.serviceWorker.register(
-        /* webpackChunkName: "downloadServiceWorker" */
+        /* webpackChunkName: "./downloadServiceWorker" */
         new URL('./downloadServiceWorker', import.meta.url),
         {
-            scope: `/_content/blazorStreamSaver/`
+            scope: './'
         }
-    );
+    ).then((x) => {
+        console.log(x);
+    });
     console.log("sw registered");
     serviceWorkerKeepAlive();
 }
@@ -61,7 +63,7 @@ async function wakeUpServiceWorker() {
         worker.postMessage({ action: 'ping' });
     } else {
         console.log("worker not found");
-        const workerUrl = `${document.location.origin}/serviceWorker/ping`;
+        const workerUrl = `${document.location.origin}/downloadServiceWorker/ping`;
         const response = await fetch(workerUrl);
         const body = await response.text();
         if (!response.ok || body !== 'pong') {
