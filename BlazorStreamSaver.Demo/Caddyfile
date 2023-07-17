@@ -6,7 +6,7 @@
 		format console
 	}
 
-    handle /_content/BlazorStreamSaver/downloadServiceWorker {
+    handle /_content/BlazorStreamSaver/* {
         root * /srv
     
         file_server {
@@ -18,6 +18,14 @@
             Service-Worker "script"
         }
 	}
+	
+	handle /_content/* {
+        root * /srv
+        
+        file_server {
+            precompressed br gzip
+        }
+    }
 
 	handle {
 		root * /srv

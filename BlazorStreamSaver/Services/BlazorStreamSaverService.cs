@@ -26,6 +26,9 @@ public partial class BlazorStreamSaverService : IBlazorStreamSaverService
     {
         if (OperatingSystem.IsBrowser())
         {
+            await JSHost.ImportAsync("blazorStreamSaver", "../_content/BlazorStreamSaver/blazorStreamSaver.bundle.js");
+            //await PrivateInitializeServiceWorkerAsync();
+            await PrivateInitializeAsync();
             _moduleReference = await _jsRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "../_content/BlazorStreamSaver/blazorStreamSaver.bundle.js");
         }
     }
@@ -34,5 +37,15 @@ public partial class BlazorStreamSaverService : IBlazorStreamSaverService
     {
         DotNetStreamReference streamReference = new DotNetStreamReference(stream, false);
         await _moduleReference.InvokeVoidAsync("saveFile", streamReference);
+        //await PrivateSaveFileAsync(streamReference);
     }
+
+    [JSImport("init", "blazorStreamSaver")]
+    private static partial Task PrivateInitializeAsync();
+
+    [JSImport("initializeServiceWorker", "blazorStreamSaver")]
+    private static partial Task PrivateInitializeServiceWorkerAsync();
+
+    //[JSImport("saveFile", "blazorStreamSaver")]
+    //private static partial Task PrivateSaveFileAsync(DotNetStreamReference stream);
 }

@@ -10,7 +10,8 @@ export async function initializeServiceWorker() {
         /* webpackChunkName: "./downloadServiceWorker" */
         new URL('./downloadServiceWorker', import.meta.url),
         {
-            scope: './'
+            scope: '/',
+            type: 'module'
         }
     ).then((x) => {
         console.log(x);
@@ -63,7 +64,7 @@ async function wakeUpServiceWorker() {
         worker.postMessage({ action: 'ping' });
     } else {
         console.log("worker not found");
-        const workerUrl = `${document.location.origin}/downloadServiceWorker/ping`;
+        const workerUrl = `${document.location.origin}/serviceWorker/ping`;
         const response = await fetch(workerUrl);
         const body = await response.text();
         if (!response.ok || body !== 'pong') {

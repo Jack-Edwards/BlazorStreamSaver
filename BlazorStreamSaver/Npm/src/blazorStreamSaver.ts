@@ -4,10 +4,11 @@ class BlazorStreamSaver {
     
     private static _instance: BlazorStreamSaver;
     
-    constructor() {
+    public async init() {
         console.log("initializing service worker from main");
-        initializeServiceWorker().catch((error): void => {
+        await initializeServiceWorker().catch((error): void => {
             console.warn('Not supported on this browser', error.message);
+            console.error(error);
         }).finally(() => {
             console.log("service worker initialization finished from main");
         });
@@ -29,10 +30,12 @@ class BlazorStreamSaver {
     }
 }
 
-export async function saveFile(stream: ReadableStream<Uint8Array>, metaData: FileMetaData): Promise<void> {
+export async function init(): Promise<void> {
     let thisInstance: BlazorStreamSaver = BlazorStreamSaver.getInstance();
-    await delay(5000);
-    await thisInstance.saveFile(stream, metaData);
+    await thisInstance.init();
 }
 
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+export async function saveFile(stream: ReadableStream<Uint8Array>, metaData: FileMetaData): Promise<void> {
+    let thisInstance: BlazorStreamSaver = BlazorStreamSaver.getInstance();
+    await thisInstance.saveFile(stream, metaData);
+}
