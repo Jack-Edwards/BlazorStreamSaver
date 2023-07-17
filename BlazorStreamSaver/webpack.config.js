@@ -2,13 +2,9 @@
 const CompressionPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-module.exports = {
-    name: 'blazorStreamSaver',
+let baseConfig = {
     target: 'web',
     mode: 'production',
-    experiments: {
-        outputModule: true,
-    },
     module: {
         rules: [
             {
@@ -32,13 +28,6 @@ module.exports = {
             }),
         ],
     },
-    output: {
-        path: path.resolve(__dirname, 'wwwroot'),
-        filename: 'blazorStreamSaver.bundle.js',
-        library: {
-            type: 'module'
-        }
-    },
     plugins: [
         new CompressionPlugin({
             algorithm: 'gzip',
@@ -52,5 +41,31 @@ module.exports = {
     ],
     resolve: {
         extensions: ['.ts', '.js']
+    }
+};
+
+let moduleConfig = Object.assign({}, baseConfig, {
+    name: 'blazorStreamSaver',
+    entry: "./Npm/src/blazorStreamSaver.ts",
+    experiments: {
+        outputModule: true,
     },
-}
+    output: {
+        path: path.resolve(__dirname, 'wwwroot'),
+        filename: 'blazorStreamSaver.bundle.js',
+        library: {
+            type: 'module'
+        }
+    }
+});
+
+let serviceWorkerConfig = Object.assign({}, baseConfig, {
+   name: 'blazorStreamSaverServiceWorker',
+    entry: "./Npm/src/downloadServiceWorker.ts",
+   output: {
+       path: path.resolve(__dirname, 'wwwroot'),
+       filename: 'blazorStreamSaver.serviceWorker.bundle.js',
+   } 
+});
+
+module.exports = [moduleConfig, serviceWorkerConfig];
