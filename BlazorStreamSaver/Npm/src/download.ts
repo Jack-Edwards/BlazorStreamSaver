@@ -7,11 +7,9 @@
 export async function initializeServiceWorker() {
     console.log("registering worker");
     await navigator.serviceWorker.register(
-        /* webpackChunkName: "./downloadServiceWorker" */
-        new URL('./downloadServiceWorker', import.meta.url),
+        new URL('./serviceWorker', import.meta.url),
         {
-            scope: '/',
-            type: 'module'
+            scope: '/'
         }
     ).then((x) => {
         console.log(x);

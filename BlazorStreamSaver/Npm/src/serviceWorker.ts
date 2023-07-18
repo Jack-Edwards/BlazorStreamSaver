@@ -44,7 +44,7 @@ function createDownloadStream(port: MessagePort) {
  * Service worker that listens for client-generated file data
  * and generates a unique link for downloading the data as a file stream.
  */
-class DownloadServiceWorker {
+class ServiceWorker {
     pendingDownloads = new Map<string, DownloadConfig>();
 
     constructor() {
@@ -119,4 +119,4 @@ class DownloadServiceWorker {
     };
 }
 
-export default new DownloadServiceWorker();
+export default new ServiceWorker();

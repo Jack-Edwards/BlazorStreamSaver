@@ -6,8 +6,10 @@
 		format console
 	}
 
-    handle /_content/BlazorStreamSaver/* {
-        root * /srv
+    rewrite /serviceWorker /serviceWorker.js
+
+    handle /serviceWorker.js {
+        root * /srv/_content/BlazorStreamSaver
     
         file_server {
             precompressed br gzip
@@ -18,6 +20,14 @@
             Service-Worker "script"
         }
 	}
+	
+    handle /_content/BlazorStreamSaver/* {
+        root * /srv
+    
+        file_server {
+            precompressed br gzip
+        }
+    }
 	
 	handle /_content/* {
         root * /srv
