@@ -34,9 +34,13 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="npm install" />
-        <Exec Command="npm run build" />
+        <Exec Command="pnpm install" />
+        <Exec Command="pnpm run build" />
     </Target>
 
 </Project>
