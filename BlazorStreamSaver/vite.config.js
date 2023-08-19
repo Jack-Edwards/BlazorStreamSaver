@@ -6,8 +6,8 @@ import viteCompression from 'vite-plugin-compression';
 export default defineConfig({
     build: {
         lib: {
-            name: 'blazor-sodium',
-            entry: path.join(__dirname, 'Npm/src/blazorStreamSaver.js'),
+            name: 'blazor-stream-saver',
+            entry: path.join(__dirname, "Npm/src/blazorStreamSaver.ts"),
             fileName: (format) => `blazorStreamSaver.${format}.js`
         },
         rollupOutputOptions: {

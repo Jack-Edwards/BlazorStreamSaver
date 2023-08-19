@@ -1,9 +1,10 @@
 {
   "name": "blazor-stream-saver",
-  "private": "true",
+  "private": true,
   "version": "1.0.0",
   "author": "Jack Edwards",
   "license": "GPL",
+  "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "vite build"
