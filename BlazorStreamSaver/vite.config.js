@@ -1,38 +1,35 @@
 import path from 'path';
+import compression from 'vite-plugin-compression2';
 import { defineConfig } from 'vite';
-import terser from '@rollup/plugin-terser';
-import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig({
     build: {
+        target: 'esnext',
+        minify: 'esbuild',
         lib: {
-            name: 'blazor-stream-saver',
-            entry: path.join(__dirname, "Npm/src/blazorStreamSaver.ts"),
-            fileName: (format) => `blazorStreamSaver.${format}.js`
+            entry: path.resolve(__dirname, 'Npm/src/blazorStreamSaver.ts'),
+            formats: ['es'],
+            fileName: 'blazorStreamSaver.bundle',
         },
-        rollupOutputOptions: {
-            plugins: [
-                terser({
-                    compress: {
-                        drop_console: false,
-                        passes: 3
-                    },
-                    mangle: true
-                }),
-                viteCompression({
-                    algorithm: 'brotliCompress',
-                    ext: 'br'
-                }),
-                viteCompression({
-                    algorithm: 'gzip',
-                    ext: 'gz',
-                    compressionOptions: {
-                        params: {
-                            quality: 11
-                        }
-                    }
-                })
-            ]
+        outDir: path.resolve(__dirname, 'wwwroot'),
+        sourcemap: false,
+        rollupOptions: {
+            external: [
+                "Npm/src/serviceWorker.ts"
+            ],
         }
-    }
+    },
+    plugins: [
+        compression({
+            algorithm: 'gzip',
+            ext: /\.(js|css|html|svg)$/,
+            exclude: [/\.(br)$/, /\.(gz)$/]
+        }),
+        compression({
+            algorithm: 'brotliCompress',
+            ext: /\.(js|css|html|svg)$/,
+            exclude: [/\.(br)$/, /\.(gz)$/],
+            options: { level: 11 }
+        })
+    ],
 });
