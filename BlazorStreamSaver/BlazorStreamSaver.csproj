@@ -41,6 +41,7 @@
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
         <Exec Command="pnpm install" />
         <Exec Command="pnpm run build" />
+        <Exec Command="pnpm run buildWorker" />
     </Target>
 
 </Project>
