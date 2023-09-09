@@ -10,7 +10,7 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, 'Npm/src/serviceWorker.ts'),
             formats: ['es'],
-            fileName: 'blazorStreamSaver.serviceWorker.bundle',
+            fileName: 'serviceWorker',
         },
         outDir: path.resolve(__dirname, 'wwwroot'),
         sourcemap: false,

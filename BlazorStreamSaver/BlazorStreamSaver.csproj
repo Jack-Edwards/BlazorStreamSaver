@@ -29,17 +29,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="Npm\src\blazorStreamSaver.js">
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
-    <ItemGroup>
       <Folder Include="wwwroot\" />
     </ItemGroup>
 
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="pnpm install" />
+        <Exec Command="pnpm install --force" />
         <Exec Command="pnpm run build" />
         <Exec Command="pnpm run buildWorker" />
     </Target>

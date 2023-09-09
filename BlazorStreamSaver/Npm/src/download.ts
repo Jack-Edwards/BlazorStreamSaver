@@ -7,7 +7,7 @@
 export async function initializeServiceWorker() {
     console.log("registering worker");
     await navigator.serviceWorker.register(
-        new URL('./serviceWorker', import.meta.url),
+        new URL('/serviceWorker', import.meta.url),
         {
             scope: '/'
         }
